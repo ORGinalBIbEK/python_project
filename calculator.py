@@ -35,6 +35,17 @@ window.resizable(False,False)
 frame=tkinter.Frame(window,bg=color_dark_charcoal)
 label=tkinter.Label(frame,text="0",bg=color_dark_charcoal,fg="white",font=("Arial",30),anchor="e")
 
-label.grid(fill="both",expand=True,row=0,column=0)
-frame.pack(fill="both",expand=True)
+label.grid(row=0,column=0)
+
+for row in range(row_count):
+    for column in range(column_count):
+        value=button_value[row][column]
+        button=tkinter.Button(frame,text=value,bg=color_dark_charcoal,fg="white",font=("Arial",30),
+                              width=column_count-1,height=1,
+                              command=lambda value=value:button_clicked(value))
+        button.grid(row=row+1,column=column,sticky="nsew",padx=1,pady=1) 
+frame.pack()
+def button_clicked(value):
+    pass
+
 window.mainloop()
