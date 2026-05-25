@@ -33,7 +33,8 @@ window.title("Calculator")
 window.resizable(False,False)
 
 frame=tkinter.Frame(window,bg=color_dark_charcoal)
-label=tkinter.Label(frame,text="0",bg=color_dark_charcoal,fg="white",font=("Arial",30),anchor="e")
+label=tkinter.Label(frame,text="0",bg=color_dark_charcoal,fg="white",font=("Arial",30),anchor="e"
+                    ,width=column_count)
 
 label.grid(row=0,column=0,columnspan=column_count,sticky="we")
 
@@ -54,7 +55,39 @@ for row in range(row_count):
         button.grid(row=row+1,column=column,sticky="nsew",padx=1,pady=1)
 
 frame.pack()
+
+A="0"
+operator=None
+b=None
+
 def button_clicked(value):
-    pass
+    global right_symbol,top_symbol,A,operator,b
+
+    if value in right_symbol:
+        pass
+    elif value in top_symbol:
+        pass
+    else: #digit or dot
+        if value ==".":
+            pass
+        elif value in "0123456789":
+            if label["text"]=="0":
+                label["text"]=value
+            else:
+                label["text"]+=value
+
+
+#center the window
+window.update() #update the window to gets the new size dimesnsion
+window_width=window.winfo_width()
+window_height=window.winfo_height()
+screen_width=window.winfo_screenwidth()
+screen_height=window.winfo_screenheight()
+
+window_x=int((screen_width/2)-(window_width/2))
+window_y=int((screen_height/2)-(window_height/2))
+
+#FORMAT "(width) x (height) +(x)+(y)"
+window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
 window.mainloop()
