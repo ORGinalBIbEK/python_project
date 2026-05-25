@@ -76,7 +76,16 @@ def button_clicked(value):
     global right_symbol,top_symbol,A,operator,b
 
     if value in right_symbol:
-        pass
+        if value=="X-+":
+            if operator is not None and b is not None:
+                if operator=="x":
+                    A=float(A)*float(b)
+                elif operator=="-":
+                    A=float(A)-float(b)
+        elif value=="=":
+            pass
+
+
     elif value in top_symbol:
         if value=="AC":
             clear_all()
