@@ -2,14 +2,14 @@ import tkinter
 
 
 button_value=[
-    ["AC","DEL","%","/"],
+    ["AC","DEL","%","π"],
     ["7","8","9","X"],
     ["4","5","6","-"],
     ["1","2","3","+"],
     ["0",".","+/-","="]
 ]
-right_symbol=["/","X","-","+","="]
-top_symbol=["AC","DEL","%"]
+right_symbol=["X","-","+","="]
+top_symbol=["AC","DEL","%","π"]
 
 row_count=len(button_value) #5
 column_count=len(button_value[0]) #4
@@ -97,8 +97,11 @@ def button_clicked(value):
             result=float(label["text"])/100
             label["text"]=str(remove_zero_decimal(result))
         
-        elif value=="/":
-            pass
+        elif value == "π":
+            if label["text"] == "0":
+                label["text"] = "3.1415"
+            else:
+                label["text"] += "×3.1415"  # or however you want to chain it
     else: #digit or dot
         if value ==".":
             if "." not in label["text"]:
