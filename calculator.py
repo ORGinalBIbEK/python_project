@@ -18,7 +18,7 @@ column_count=len(button_value[0]) #4
 color_dark_charcoal="#1C1C1E"
 
 #Number Keys:
-color_light_greay="#3A3A3C"
+color_light_gray="#3A3A3C"
 
 #Function Keys (+, −, ×, ÷):
 color_bright_color ="#FF9F0A"
@@ -35,7 +35,7 @@ window.resizable(False,False)
 frame=tkinter.Frame(window,bg=color_dark_charcoal)
 label=tkinter.Label(frame,text="0",bg=color_dark_charcoal,fg="white",font=("Arial",30),anchor="e")
 
-label.grid(row=0,column=0)
+label.grid(row=0,column=0,columnspan=column_count,sticky="we")
 
 for row in range(row_count):
     for column in range(column_count):
@@ -43,7 +43,16 @@ for row in range(row_count):
         button=tkinter.Button(frame,text=value,bg=color_dark_charcoal,fg="white",font=("Arial",30),
                               width=column_count-1,height=1,
                               command=lambda value=value:button_clicked(value))
-        button.grid(row=row+1,column=column,sticky="nsew",padx=1,pady=1) 
+        if value in top_symbol:
+            button.config(bg=color_slate_gray)
+        elif value in right_symbol:
+            button.config(bg=color_bright_color)
+        else:
+            button.config(bg=color_light_gray)
+
+
+        button.grid(row=row+1,column=column,sticky="nsew",padx=1,pady=1)
+
 frame.pack()
 def button_clicked(value):
     pass
