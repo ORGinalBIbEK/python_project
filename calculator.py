@@ -81,20 +81,22 @@ def button_clicked(value):
         if value=="AC":
             clear_all()
             label["text"]="0"
+
         elif value == "DEL":
             text = label["text"]
-
             if len(text) > 1:
                 text = text[:-1]
-
                 if text == "-" or text == "":
                     text = "0"
             else:
                 text = "0"
 
             label["text"] = text
+
         elif value=="%":
-            pass
+            result=float(label["text"])/100
+            label["text"]=str(remove_zero_decimal(result))
+        
         elif value=="/":
             pass
     else: #digit or dot
@@ -104,7 +106,7 @@ def button_clicked(value):
 
         elif value=="+/-":
             result=float(label["text"])*-1
-            label["text"]=remove_zero_decimal(result)
+            label["text"]=str(remove_zero_decimal(result))
         elif value in "0123456789":
             if label["text"]=="0":
                 label["text"]=value
