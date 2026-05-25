@@ -77,13 +77,23 @@ def button_clicked(value):
 
     if value in right_symbol:
         if value=="X-+":
+            operator is None:
+            A=label["text"]
+            label["text"]="0"
+            B="0"
+
+        opeerator=value
+
+    elif value=="=":
             if operator is not None and b is not None:
-                if operator=="x":
-                    A=float(A)*float(b)
+                B=label["text"]
+                numA=float(A)
+                numB=float(B)
+
+                if operator=="X":
+                    label["text"]=str(remove_zero_decimal(numA*numB))
                 elif operator=="-":
-                    A=float(A)-float(b)
-        elif value=="=":
-            pass
+                    label["text"]=str(remove_zero_decimal(numA-numB))
 
 
     elif value in top_symbol:
