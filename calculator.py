@@ -66,6 +66,12 @@ def clear_all():
     B=None
     operator=None
 
+def remove_zero_decimal(result):
+    if result%1==0:
+        return int(result)
+    else:
+        return result
+
 def button_clicked(value):
     global right_symbol,top_symbol,A,operator,b
 
@@ -75,11 +81,18 @@ def button_clicked(value):
         if value=="AC":
             clear_all()
             label["text"]="0"
-        elif value=="DEL":
-            if len(label["text"])>1:
-                label["text"]=label["text"][:-1]
+        elif value == "DEL":
+            text = label["text"]
+
+            if len(text) > 1:
+                text = text[:-1]
+
+                if text == "-" or text == "":
+                    text = "0"
             else:
-                label["text"]="0"
+                text = "0"
+
+            label["text"] = text
         elif value=="%":
             pass
         elif value=="/":
@@ -90,7 +103,8 @@ def button_clicked(value):
                 label["text"]+=value
 
         elif value=="+/-":
-            pass
+            result=float(label["text"])*-1
+            label["text"]=remove_zero_decimal(result)
         elif value in "0123456789":
             if label["text"]=="0":
                 label["text"]=value
