@@ -1,6 +1,5 @@
 import tkinter
-
-
+import math
 button_value=[
     ["AC","DEL","%","π"],
     ["7","8","9","X"],
@@ -10,6 +9,8 @@ button_value=[
 ]
 right_symbol=["X","-","+","="]
 top_symbol=["AC","DEL","%","π"]
+operators    = ["X", "-", "+"]
+
 
 row_count=len(button_value) #5
 column_count=len(button_value[0]) #4
@@ -33,11 +34,14 @@ window.title("Calculator")
 window.resizable(False,False)
 
 frame=tkinter.Frame(window,bg=color_dark_charcoal)
-label=tkinter.Label(frame,text="0",bg=color_dark_charcoal,fg="white",font=("Arial",30),anchor="e"
-                    ,width=column_count)
+# Replace your single label with two:
+expr_label = tkinter.Label(frame, text="", bg=color_dark_charcoal, fg="gray",
+                           font=("Arial", 15), anchor="e", width=column_count)
+expr_label.grid(row=0, column=0, columnspan=column_count, sticky="we")
 
-label.grid(row=0,column=0,columnspan=column_count,sticky="we")
-
+label = tkinter.Label(frame, text="0", bg=color_dark_charcoal, fg="white",
+                      font=("Arial", 30), anchor="e", width=column_count)
+label.grid(row=1, column=0, columnspan=column_count, sticky="we")
 for row in range(row_count):
     for column in range(column_count):
         value=button_value[row][column]
@@ -61,10 +65,10 @@ operator=None
 b=None
 
 def clear_all():
-    global A,B,operator
-    A="0"
-    B=None
-    operator=None
+    global A, operator
+    A        = "0"
+    operator = None
+    expr_label["text"] = ""   # clear expression line
 
 def remove_zero_decimal(result):
     if result%1==0:
@@ -72,30 +76,38 @@ def remove_zero_decimal(result):
     else:
         return result
 
+def parse_display(text):
+    """Replace π symbol with actual value before calculating."""
+    return float(text.replace("π", str(math.pi)))
+
 def button_clicked(value):
-    global right_symbol,top_symbol,A,operator,b
+    global A, operator
 
-    if value in right_symbol:
-        if value=="X-+":
-            operator is None:
-            A=label["text"]
-            label["text"]="0"
-            B="0"
+    if value in operators:
+        A        = label["text"]
+        operator = value
+        expr_label["text"] = A + " " + value   # shows "9 X"
+        label["text"] = "0"
 
-        opeerator=value
+    elif value == "=":
+        if operator is not None:
+            try:
+                numA = parse_display(A)
+                numB = parse_display(label["text"])
 
-    elif value=="=":
-            if operator is not None and b is not None:
-                B=label["text"]
-                numA=float(A)
-                numB=float(B)
+            if operator == "X":
+                result = numA * numB
+            elif operator == "-":
+                result = numA - numB
+            elif operator == "+":
+                result = numA + numB
 
-                if operator=="X":
-                    label["text"]=str(remove_zero_decimal(numA*numB))
-                elif operator=="-":
-                    label["text"]=str(remove_zero_decimal(numA-numB))
-
-
+            expr_label["text"] = A + " " + operator + " " + label["text"] + " ="  # shows "9 X 9 ="
+            label["text"] = str(remove_zero_decimal(result))
+            A = label["text"]
+        except:
+            label["text"] = "Error"
+        operator = None
     elif value in top_symbol:
         if value=="AC":
             clear_all()
